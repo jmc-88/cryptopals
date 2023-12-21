@@ -9,7 +9,7 @@
 namespace cp {
 namespace hex {
 
-uint8_t DecodeCharacter(char c) {
+std::uint8_t DecodeCharacter(char c) {
   assert(isxdigit(c));
 
   if (c >= 'A' && c <= 'F') {

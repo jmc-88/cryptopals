@@ -8,7 +8,7 @@
 namespace cp {
 namespace hex {
 
-uint8_t DecodeCharacter(char);
+std::uint8_t DecodeCharacter(char);
 std::vector<bool> DecodeString(std::string_view input);
 
 }  // namespace hex
