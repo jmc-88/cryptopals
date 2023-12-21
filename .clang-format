@@ -1,0 +1,17 @@
+---
+Language:      Cpp
+BasedOnStyle:  Google
+
+# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+AlignAfterOpenBracket: AlwaysBreak
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeComma
+InsertBraces: true
+PackConstructorInitializers: Never
