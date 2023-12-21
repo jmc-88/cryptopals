@@ -12,7 +12,7 @@ int main() {
   constexpr std::string_view kExpected =
       "SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t"sv;
 
-  auto bits = cp::hex::DecodeString(kInput);
-  auto result = cp::base64::Encode(bits);
+  const auto bits = cp::hex::DecodeString(kInput);
+  const auto result = cp::base64::Encode(bits);
   assert(result == kExpected);
 }
