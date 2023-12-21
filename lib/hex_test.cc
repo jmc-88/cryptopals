@@ -21,7 +21,26 @@ static void TestDecodeString() {
   }
 }
 
+static void TestEncodeHalfByte() {
+  assert(cp::hex::EncodeHalfByte(0x0) == '0');
+  assert(cp::hex::EncodeHalfByte(0x7) == '7');
+  assert(cp::hex::EncodeHalfByte(0x9) == '9');
+  assert(cp::hex::EncodeHalfByte(0xA) == 'a');
+  assert(cp::hex::EncodeHalfByte(0xF) == 'f');
+}
+
+static void TestEncodeString() {
+  {
+    const auto actual =
+        cp::hex::EncodeString({1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1,
+                               1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0});
+    assert(actual == "babbe0");
+  }
+}
+
 int main() {
   TestDecodeCharacter();
   TestDecodeString();
+  TestEncodeHalfByte();
+  TestEncodeString();
 }

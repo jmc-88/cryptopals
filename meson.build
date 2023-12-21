@@ -8,8 +8,9 @@ project(
 libcrypto = library(
     'crypto',
     [
-        'lib/hex.cc',
         'lib/base64.cc',
+        'lib/bitwise.cc',
+        'lib/hex.cc',
     ],
     install: true,
 )
@@ -20,6 +21,11 @@ test(
 )
 
 test(
+    'bitwise',
+    executable('bitwise', 'lib/bitwise_test.cc', link_with: libcrypto),
+)
+
+test(
     'hex',
     executable('hex', 'lib/hex_test.cc', link_with: libcrypto),
 )
@@ -27,4 +33,9 @@ test(
 test(
     'set1_challenge1',
     executable('set1_challenge1', 'src/set1/challenge1.cc', link_with: libcrypto),
+)
+
+test(
+    'set1_challenge2',
+    executable('set1_challenge2', 'src/set1/challenge2.cc', link_with: libcrypto),
 )
