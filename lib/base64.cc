@@ -27,7 +27,7 @@ namespace cp {
 namespace base64 {
 
 using namespace std::string_view_literals;
-constexpr std::string_view kBase64Alphabet =
+constexpr auto kBase64Alphabet =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="sv;
 
 std::string Encode(const std::vector<bool>& input) {

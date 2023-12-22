@@ -12,9 +12,9 @@
 // https://cryptopals.com/sets/1/challenges/3
 int main() {
   using namespace std::string_view_literals;
-  constexpr std::string_view kInput =
+  constexpr auto kInput =
       "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"sv;
-  constexpr std::string_view kExpected = "Cooking MC's like a pound of bacon"sv;
+  constexpr auto kExpected = "Cooking MC's like a pound of bacon"sv;
 
   double best_distance = std::numeric_limits<double>::infinity();
   std::string best_match;
