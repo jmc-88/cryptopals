@@ -5,6 +5,9 @@ project(
     default_options: ['warning_level=3', 'cpp_std=c++17'],
 )
 
+data_path = join_paths(meson.current_source_dir(), 'data')
+define_data_path = f'-D_DATA_PATH="@data_path@"'
+
 libcrypto = library(
     'crypto',
     [
@@ -55,4 +58,14 @@ test(
 test(
     'set1_challenge3',
     executable('set1_challenge3', 'src/set1/challenge3.cc', link_with: libcrypto),
+)
+
+test(
+    'set1_challenge4',
+    executable(
+        'set1_challenge4',
+        'src/set1/challenge4.cc',
+        cpp_args: [define_data_path],
+        link_with: libcrypto,
+    ),
 )
