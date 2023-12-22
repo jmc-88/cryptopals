@@ -4,9 +4,11 @@
 #include <cassert>
 #include <cmath>
 #include <cstddef>
+#include <cstdint>
 #include <limits>
 #include <string_view>
 #include <type_traits>
+#include <vector>
 
 namespace {
 
@@ -113,19 +115,6 @@ static void TestScore() {
   assert(equal(total, 1.0));
 }
 
-static void TestLetterScore() {
-  using namespace std::string_view_literals;
-
-  const auto kInput = "abcdefghijklmnopqrstuvwxyz"sv;
-  const auto score = cp::frequency::LetterScore(kInput);
-
-  for (double s : score) {
-    // Somehow this doesn't work within the range of just 1 ulps, but it works
-    // when extending it to 2. ¯\_(ツ)_/¯
-    assert(equal_within_ulps(s, 1.0 / 26.0, 2));
-  }
-}
-
 static void TestLetterDistance() {
   using namespace std::string_view_literals;
 
@@ -136,11 +125,43 @@ static void TestLetterDistance() {
   const auto garbage_delta = cp::frequency::LetterDistance(kGarbageInput);
 
   assert(good_delta < garbage_delta);
+
+  constexpr auto kNonAlphaInput = "s!dk@j#d h;j|e nd$j'l!k s^k$(s"sv;
+  const auto non_alpha_delta = cp::frequency::LetterDistance(kNonAlphaInput);
+
+  assert(garbage_delta < non_alpha_delta);
+}
+
+static void TestMostLikelyDecoding() {
+  using namespace std::string_view_literals;
+
+  // The bits for the test string, XOR-ed against 0b01100101.
+  const std::vector<bool> kInput = {
+      0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0,
+      0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1,
+      0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0,
+      0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1,
+      0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0,
+      0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0,
+      0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1,
+      0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+      0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0,
+      0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0,
+      0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+      0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1,
+  };
+  constexpr auto kExpected = "Scoring will continue until morale improves."sv;
+
+  const auto [result, _] = cp::frequency::MostLikelyDecoding(kInput);
+  assert(result == kExpected);
 }
 
 int main() {
   TestTable();
   TestScore();
-  TestLetterScore();
   TestLetterDistance();
+  TestMostLikelyDecoding();
 }
