@@ -19,27 +19,27 @@ libcrypto = library(
 
 test(
     'ascii',
-    executable('ascii', 'lib/ascii_test.cc', link_with: libcrypto),
+    executable('ascii_test', 'lib/ascii_test.cc', link_with: libcrypto),
 )
 
 test(
     'base64',
-    executable('base64', 'lib/base64_test.cc', link_with: libcrypto),
+    executable('base64_test', 'lib/base64_test.cc', link_with: libcrypto),
 )
 
 test(
     'bitwise',
-    executable('bitwise', 'lib/bitwise_test.cc', link_with: libcrypto),
+    executable('bitwise_test', 'lib/bitwise_test.cc', link_with: libcrypto),
 )
 
 test(
     'frequency',
-    executable('frequency', 'lib/frequency_test.cc', link_with: libcrypto),
+    executable('frequency_test', 'lib/frequency_test.cc', link_with: libcrypto),
 )
 
 test(
     'hex',
-    executable('hex', 'lib/hex_test.cc', link_with: libcrypto),
+    executable('hex_test', 'lib/hex_test.cc', link_with: libcrypto),
 )
 
 test(
