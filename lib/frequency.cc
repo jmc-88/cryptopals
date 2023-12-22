@@ -50,7 +50,7 @@ namespace cp {
 namespace frequency {
 
 std::array<std::size_t, 256> Table(std::string_view input) {
-  std::array<std::size_t, 256> result;
+  std::array<std::size_t, 256> result = {};
   for (std::uint8_t c : input) {
     result[c]++;
   }
@@ -94,7 +94,7 @@ double LetterDistance(std::string_view input) {
 std::pair<std::string, double> MostLikelyDecoding(
     const std::vector<bool>& bits) {
   double best_distance = std::numeric_limits<double>::infinity();
-  std::string best_match;
+  std::string best_match = {};
 
   for (std::uint8_t b = 0; b < 255; b++) {
     const auto xor_data = cp::bitwise::Xor(bits, cp::bitwise::Mask(b, bits));
