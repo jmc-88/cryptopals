@@ -23,6 +23,7 @@ std::vector<bool> Xor(
 std::vector<bool> Mask(std::uint8_t b, const std::vector<bool>& bits) {
   assert(bits.size() % 8 == 0);
   std::vector<bool> mask;
+  mask.reserve(bits.size());
   while (mask.size() != bits.size()) {
     mask.push_back(b & 0b10000000);
     mask.push_back(b & 0b01000000);
