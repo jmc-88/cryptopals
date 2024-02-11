@@ -97,7 +97,8 @@ std::pair<std::string, double> MostLikelyDecoding(
   std::string best_match = {};
 
   for (std::uint8_t b = 0; b < 255; b++) {
-    const auto xor_data = cp::bitwise::Xor(bits, cp::bitwise::Mask(b, bits));
+    const auto xor_data =
+        cp::bitwise::Xor(bits, cp::bitwise::Mask(b, bits.size()));
     const auto text = cp::ascii::EncodeString(xor_data);
     const auto delta = LetterDistance(text);
     if (delta < best_distance) {

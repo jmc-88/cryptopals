@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
+#include <iterator>
 #include <vector>
 
 namespace cp {
@@ -20,20 +21,29 @@ std::vector<bool> Xor(
   return result;
 }
 
-std::vector<bool> Mask(std::uint8_t b, const std::vector<bool>& bits) {
-  assert(bits.size() % 8 == 0);
+std::vector<bool> Mask(std::uint8_t b, std::size_t bits) {
+  const std::vector<bool> key = {
+      static_cast<bool>(b & 0b10000000),
+      static_cast<bool>(b & 0b01000000),
+      static_cast<bool>(b & 0b00100000),
+      static_cast<bool>(b & 0b00010000),
+      static_cast<bool>(b & 0b00001000),
+      static_cast<bool>(b & 0b00000100),
+      static_cast<bool>(b & 0b00000010),
+      static_cast<bool>(b & 0b00000001),
+  };
+  return Mask(key, bits);
+}
+
+std::vector<bool> Mask(const std::vector<bool>& key, std::size_t bits) {
+  assert(bits % 8 == 0);
+
   std::vector<bool> mask;
-  mask.reserve(bits.size());
-  while (mask.size() != bits.size()) {
-    mask.push_back(b & 0b10000000);
-    mask.push_back(b & 0b01000000);
-    mask.push_back(b & 0b00100000);
-    mask.push_back(b & 0b00010000);
-    mask.push_back(b & 0b00001000);
-    mask.push_back(b & 0b00000100);
-    mask.push_back(b & 0b00000010);
-    mask.push_back(b & 0b00000001);
+  mask.reserve(bits);
+  while (mask.size() < bits) {
+    std::copy(key.cbegin(), key.cend(), std::back_inserter(mask));
   }
+  mask.resize(bits);  // chop off any extra bits, if bits % key.size() != 0
   return mask;
 }
 

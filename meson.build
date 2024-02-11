@@ -132,3 +132,14 @@ test(
         link_with: libcrypto,
     ),
 )
+
+test(
+    'set1_challenge5',
+    executable(
+        'set1_challenge5',
+        'src/set1/challenge5.cc',
+        cpp_args: [define_data_path],
+        dependencies: dependencies,
+        link_with: libcrypto,
+    ),
+)
