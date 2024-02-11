@@ -1,0 +1,13 @@
+option(
+    'libprofiler',
+    type: 'boolean',
+    value: false,
+    description: 'Link against libprofiler',
+)
+
+option(
+    'libtcmalloc',
+    type: 'boolean',
+    value: false,
+    description: 'Link against TCMalloc',
+)
